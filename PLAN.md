@@ -36,10 +36,9 @@
 - [x] `uv run python -c "import httpx; print('httpx OK')"` → prints `httpx OK`
 
 ### Create folder structure
-- [ ] Create folders: `server/`, `client/`, `agent/`, `workspace/`
-- [ ] Create empty `LEARNINGS.md`
-- [ ] Update `README.md` with project description
-- [ ] Commit everything
+- [x] Create folders: `server/`, `client/`, `agent/`, `workspace/`
+- [x] Update `README.md` with project description
+- [x] Commit everything
 
 ---
 
