@@ -1,0 +1,39 @@
+
+# Virtual Environment (managed by uv — never commit this)
+.venv/
+
+# uv cache (auto-generated, not needed in git)    
+.uv_cache/
+
+# NOTE: DO commit pyproject.toml and uv.lock
+# pyproject.toml = your dependencies definition
+# uv.lock = exact locked versions (ensures reproducibility)
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment variables (never commit secrets/API keys)
+.env
+.env.local
+.env.*
+
+# Project specific
+# workspace/ folder contents (created at runtime by our filesystem server)
+workspace/*
+# But keep the folder itself in git
+!workspace/.gitkeep
