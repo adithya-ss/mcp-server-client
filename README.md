@@ -1,5 +1,5 @@
 # MCP-SERVER-CLIENT
-> * Project to learn the concepts of Agentic AI and experiment with the development of a MCP Server and Client.
+> Project to learn the concepts of Agentic AI and experiment with the development of a MCP Server and Client.
 
 What is an LLM?
 <br>An LLMs (Large Language Models) are programs which can recognize and generate texts, among other tasks. 
