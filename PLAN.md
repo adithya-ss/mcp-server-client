@@ -53,11 +53,11 @@
 - [x] Key insight: LLMs are **stateless** — every call is independent
 
 **Hands-on (~40 min):**
-- [x] Create `day01_hello_llm.py`
+- [x] Create `llm_intro.py` - To learn how to send prompts to the LLM (Ollama3.2).
 - [x] Use `ollama` Python library to send a prompt
 - [x] Print the response
 - [x] Experiment with 3 different prompts
-- [x] Run with: `uv run python day01_hello_llm.py`
+- [x] Run with: `uv run python llm_intro.py`
 - [x] Commit
 
 ---
