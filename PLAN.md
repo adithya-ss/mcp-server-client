@@ -36,10 +36,9 @@
 - [x] `uv run python -c "import httpx; print('httpx OK')"` → prints `httpx OK`
 
 ### Create folder structure
-- [ ] Create folders: `server/`, `client/`, `agent/`, `workspace/`
-- [ ] Create empty `LEARNINGS.md`
-- [ ] Update `README.md` with project description
-- [ ] Commit everything
+- [x] Create folders: `server/`, `client/`, `agent/`, `workspace/`
+- [x] Update `README.md` with project description
+- [x] Commit everything
 
 ---
 
@@ -48,18 +47,18 @@
 ### Day 1 — What are LLMs, Tokens, and Prompts?
 
 **Concept (~20 min):**
-- [ ] Read: What is an LLM (a text-prediction engine)
-- [ ] Read: What are tokens (word chunks the model processes)
-- [ ] Read: What is a prompt (your input to the model)
-- [ ] Key insight: LLMs are **stateless** — every call is independent
+- [x] Read: What is an LLM (a text-prediction engine)
+- [x] Read: What are tokens (word chunks the model processes)
+- [x] Read: What is a prompt (your input to the model)
+- [x] Key insight: LLMs are **stateless** — every call is independent
 
 **Hands-on (~40 min):**
-- [ ] Create `day01_hello_llm.py`
-- [ ] Use `ollama` Python library to send a prompt
-- [ ] Print the response
-- [ ] Experiment with 3 different prompts
-- [ ] Run with: `uv run python day01_hello_llm.py`
-- [ ] Commit
+- [x] Create `llm_intro.py` - To learn how to send prompts to the LLM (Ollama3.2).
+- [x] Use `ollama` Python library to send a prompt
+- [x] Print the response
+- [x] Experiment with 3 different prompts
+- [x] Run with: `uv run python llm_intro.py`
+- [x] Commit
 
 ---
 
