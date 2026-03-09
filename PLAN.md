@@ -65,17 +65,17 @@
 ### Day 2 — APIs, JSON, and Tool Calling
 
 **Concept (~20 min):**
-- [ ] Understand REST APIs (request → response)
-- [ ] Understand JSON (the universal data format)
-- [ ] Key concept: **Tool calling** — LLM outputs structured JSON asking to run a function
+- [x] Understand REST APIs (request → response)
+- [x] Understand JSON (the universal data format)
+- [x] Key concept: **Tool calling** — LLM outputs structured JSON asking to run a function
 
 **Hands-on (~40 min):**
-- [ ] Create `day02_tool_calling.py`
-- [ ] Define a function `get_weather(city: str)` returning fake data
-- [ ] Use Ollama's tool-calling feature to let LLM decide when to call it
-- [ ] Print the full request/response cycle
-- [ ] Run with: `uv run python day02_tool_calling.py`
-- [ ] Commit
+- [x] Create `day02_tool_calling.py`
+- [x] Define a function `get_weather(city: str)` returning fake data
+- [x] Use Ollama's tool-calling feature to let LLM decide when to call it
+- [x] Print the full request/response cycle
+- [x] Run with: `uv run python day02_tool_calling.py`
+- [x] Commit
 
 ---
 
