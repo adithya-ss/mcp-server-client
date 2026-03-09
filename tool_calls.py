@@ -55,14 +55,14 @@ tools = [
     }
 ]
 
-# This is a mapping from tool names (as defined in the JSON schema) to the actual Python functions we want to execute 
-# when the LLM calls them.
+# This is a mapping from tool names (as defined in the JSON schema) to the actual Python functions we want to 
+# execute when the LLM calls them.
 available_functions = {
     "get_current_weather": get_current_weather,
 }
 
-# This function handles the entire flow of asking a question, letting the LLM decide if it needs to call a tool, executing that tool, 
-# and then sending the result back to the LLM for a final answer.
+# This function handles the entire flow of asking a question, letting the LLM decide if it needs to call a tool,
+# executing that tool, and then sending the result back to the LLM for a final answer.
 def ask(question: str):
     print(f"\n{'='*60}")
     print(f"USER: {question}")
@@ -80,17 +80,17 @@ def ask(question: str):
         {"role": "user", "content": question},
     ]
 
-    # --- First call: Send the question + tool definitions to the LLM ---
+    # First call: Send the question + tool definitions to the LLM
     print("\nSending question to LLM (with tool definitions)...")
     response: ChatResponse = chat(
         model="llama3.2",
         messages=messages,
-        # This is where we tell the LLM about the tools it can use. The LLM will read this and decide if it needs to call any of these 
-        # tools based on the user's question.
+        # This is where we tell the LLM about the tools it can use. The LLM will read this and decide if it needs 
+        # to call any of these tools based on the user's question.
         tools=tools,
     )
 
-    # --- Check if the LLM wants to call a tool ---
+    # Check if the LLM wants to call a tool
     if response.message.tool_calls:
         for tool_call in response.message.tool_calls:
             tool_name = tool_call.function.name
@@ -113,19 +113,17 @@ def ask(question: str):
             # Add the LLM's tool-call request to the conversation
             messages.append(response.message)
 
-            # Add the tool result to the conversation
             messages.append({
                 "role": "tool",
                 "content": result,
             })
 
-            # Add a nudge so the small model uses the result
             messages.append({
                 "role": "user",
                 "content": f"The tool returned: {result}. Please use this information to answer my original question.",
             })
 
-        # --- Second call: Send the tool result back to the LLM ---
+        # Second call: Send the tool result back to the LLM for a final answer
         print("\nSending tool result back to LLM for final answer...")
         final_response: ChatResponse = chat(
             model="llama3.2",
@@ -137,10 +135,6 @@ def ask(question: str):
         # The LLM answered directly without needing any tools
         print(f"\nASSISTANT (no tool needed): {response.message.content}")
 
-
-# =============================================================================
-# STEP 5: Test with different questions
-# =============================================================================
 
 if __name__ == "__main__":
     # This SHOULD trigger the tool (it's asking about weather)
