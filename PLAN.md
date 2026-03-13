@@ -44,14 +44,14 @@
 
 ---
 
-## Week 1 — Foundations & Your First MCP Server
+## Week 1 — Foundations & The First MCP Server
 
 ### Day 1 — What are LLMs, Tokens, and Prompts?
 
 **Concept (~20 min):**
 - [x] Read: What is an LLM (a text-prediction engine)
-- [x] Read: What are tokens (word chunks the model processes)
-- [x] Read: What is a prompt (your input to the model)
+- [x] Read: What are tokens (word chunks which the model processes)
+- [x] Read: What is a prompt (input sent to the model)
 - [x] Key insight: LLMs are **stateless** — every call is independent
 
 **Hands-on (~40 min):**
@@ -84,27 +84,27 @@
 ### Day 3 — What is MCP? The Big Picture
 
 **Concept (~20 min):**
-- [ ] Read [MCP specification overview](https://modelcontextprotocol.io/introduction)
-- [ ] Understand the 3 roles: **Host**, **Client**, **Server**
-- [ ] Understand: MCP = standardized protocol for AI apps to discover & call tools
+- [x] Read [MCP specification overview](https://modelcontextprotocol.io/introduction)
+- [x] Understand the 3 roles: **Host**, **Client**, **Server**
+- [x] Understand: MCP = standardized protocol for AI apps to discover & call tools
 
 **Hands-on (~40 min):**
 - [ ] Create `day03_notes.md`
 - [ ] Draw ASCII architecture diagram in F1 context:
   ```
-  You (Host)
+  User (Host)
     └── agent_client.py (Client)
           ├── f1_server.py     ← Jolpica API: standings, results
           ├── f1_live_server.py ← OpenF1 API: lap times, pit stops
           └── filesystem_server.py ← saves analysis to workspace/
   ```
-- [ ] Write what each part does in your own words using the F1 scenario
+- [ ] Describe each part's role in plain terms using the F1 scenario
 - [ ] List 3 F1-specific MCP use cases (e.g. "Ask the agent who leads the 2024 WDC")
 - [ ] Commit
 
 ---
 
-### Day 4 — Your First MCP Server: F1 Historical Data (Stdio Transport)
+### Day 4 — First MCP Server: F1 Historical Data (Stdio Transport)
 
 **Concept (~20 min):**
 - [ ] Understand MCP transports: stdio vs HTTP/SSE
@@ -125,7 +125,7 @@
 
 ---
 
-### Day 5 — Adding Resources and Prompts to Your F1 Server
+### Day 5 — Adding Resources and Prompts to the F1 Server
 
 **Concept (~20 min):**
 - [ ] MCP servers expose 3 primitives:
@@ -146,7 +146,7 @@
 
 ---
 
-### Day 6 — Your First MCP Client: Querying the F1 Server
+### Day 6 — First MCP Client: Querying the F1 Server
 
 **Concept (~20 min):**
 - [ ] Client's job: connect to server, discover tools/resources, wire into LLM
@@ -184,13 +184,13 @@
 **Week 1 Milestone Check:**
 - [ ] `uv run mcp dev server/f1_server.py` opens Inspector and shows all 4 tools + 1 resource + 1 prompt
 - [ ] Chat agent correctly answers *"Who led the 2024 WDC?"* by calling `get_driver_standings`
-- [ ] You can explain Host vs Client vs Server using the F1 hub as an example
+- [ ] Be able to explain Host vs Client vs Server using the F1 hub as an example
 
 ---
 
 ## Week 2 — Real-World Servers, HTTP Transport & Full Agent
 
-### Day 8 — Race Analysis File Server: Saving Your Intelligence
+### Day 8 — Race Analysis File Server: Persisting Race Intelligence
 
 **Concept (~20 min):**
 - [ ] How to safely expose file operations as MCP tools
@@ -215,7 +215,7 @@
 **Concept (~20 min):**
 - [ ] Why HTTP transport matters (remote servers, web apps, multiple clients)
 - [ ] Difference: stdio (local subprocess) vs Streamable HTTP/SSE (networked)
-- [ ] Real-world analogy: your F1 server could run on a home server, accessed from any device
+- [ ] Real-world analogy: an F1 server could run on a home server, accessible from any device
 
 **Hands-on (~40 min):**
 - [ ] Copy and convert `f1_server.py` to SSE transport → `server/f1_server_sse.py`
@@ -240,7 +240,7 @@
 - [ ] Aggregate tools from both, pass the combined list to Ollama
 - [ ] Test query 1: *"Get the 2024 constructor standings and save them to workspace/constructors_2024.txt"*
   → should call `get_constructor_standings(2024)` then `write_file(...)`
-- [ ] Test query 2: *"What files have I saved in my workspace so far?"*
+- [ ] Test query 2: *"What files are currently saved in the workspace?"*
   → should call `list_directory(".")`
 - [ ] Run with: `uv run python client/multi_server_client.py`
 - [ ] Commit
@@ -325,8 +325,8 @@
 - [ ] Write proper `README.md` documenting:
   - The 3 servers and what each exposes
   - How to run each server and the full agent
-  - Example queries you can ask the agent
-- [ ] Fill in `LEARNINGS.md` with key concepts in your own words
+  - Example queries supported by the agent
+- [ ] Fill in `LEARNINGS.md` with key concepts explained in plain terms
 - [ ] Tag the repo `v1.0`: `git tag v1.0 && git push --tags`
 - [ ] Commit
 
@@ -355,7 +355,7 @@ mcp-server-client/
 ├── pyproject.toml               (uv manages this)
 ├── uv.lock                      (auto-generated lockfile)
 ├── .python-version              (pinned Python version)
-├── PLAN.md                      ← YOU ARE HERE
+├── PLAN.md                      ← CURRENT FILE
 ├── README.md
 └── LEARNINGS.md
 ```
