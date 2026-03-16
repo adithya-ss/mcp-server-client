@@ -107,21 +107,21 @@
 ### Day 4 — First MCP Server: F1 Historical Data (Stdio Transport)
 
 **Concept (~20 min):**
-- [ ] Understand MCP transports: stdio vs HTTP/SSE
-- [ ] Stdio = communication over stdin/stdout (simplest)
-- [ ] Learn what `@mcp.tool()` decorator does
-- [ ] Explore the [Jolpica-F1 API](https://api.jolpi.ca/ergast/f1/) — free, no key, returns JSON
+- [x] Understand MCP transports: stdio vs HTTP/SSE
+- [x] Stdio = communication over stdin/stdout (simplest)
+- [x] Learn what `@mcp.tool()` decorator does
+- [x] Explore the [Jolpica-F1 API](https://api.jolpi.ca/ergast/f1/) — free, no key, returns JSON
 
 **Hands-on (~40 min):**
-- [ ] Create `server/f1_server.py`
-- [ ] Build MCP server with 3 tools using `httpx` to call Jolpica:
+- [x] Create `server/f1_server.py`
+- [x] Build MCP server with 3 tools using `httpx` to call Jolpica:
   - `get_driver_standings(season: int)` → WDC standings for any year
   - `get_race_schedule(season: int)` → all rounds for a season
   - `get_race_result(season: int, round: int)` → finishing order for one race
-- [ ] Use `mcp.run()` with stdio transport
-- [ ] Test with Inspector: `uv run mcp dev server/f1_server.py`
-- [ ] In Inspector, call `get_driver_standings(2024)` and verify Verstappen appears
-- [ ] Commit
+- [x] Use `mcp.run()` with stdio transport
+- [x] Test with Inspector: `uv run mcp dev server/f1_server.py`
+- [x] In Inspector, call `get_driver_standings(2024)` and verify Verstappen appears
+- [x] Commit
 
 ---
 
