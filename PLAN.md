@@ -89,8 +89,8 @@
 - [x] Understand: MCP = standardized protocol for AI apps to discover & call tools
 
 **Hands-on (~40 min):**
-- [ ] Create `day03_notes.md`
-- [ ] Draw ASCII architecture diagram in F1 context:
+- [x] Create `day03_notes.md`
+- [x] Draw ASCII architecture diagram in F1 context:
   ```
   User (Host)
     └── agent_client.py (Client)
@@ -98,9 +98,9 @@
           ├── f1_live_server.py ← OpenF1 API: lap times, pit stops
           └── filesystem_server.py ← saves analysis to workspace/
   ```
-- [ ] Describe each part's role in plain terms using the F1 scenario
-- [ ] List 3 F1-specific MCP use cases (e.g. "Ask the agent who leads the 2024 WDC")
-- [ ] Commit
+- [x] Describe each part's role in plain terms using the F1 scenario
+- [x] List 3 F1-specific MCP use cases (e.g. "Ask the agent who leads the 2024 WDC")
+- [x] Commit
 
 ---
 
