@@ -1,4 +1,5 @@
 import httpx
+import json
 from mcp.server.fastmcp import FastMCP
 
 
@@ -101,6 +102,69 @@ def get_race_result(season: int, round: int) -> str:
         result_lines.append(f"P{position}  {driver}  {constructor}  {time_or_status}")
 
     return "\n".join(result_lines)
+
+@mcp.tool()
+def get_constructor_standings(season: int) -> str:
+    """
+    Returns the constructor standings for a specific season, including
+    positions, constructor names, and points. Use this when asked about
+    the current or historical constructor standings.
+
+    Args:
+        season: Four-digit year, e.g. 2024.
+    """
+    url = f"{BASE_URL}/{season}/constructorStandings.json"
+    response = http_client.get(url)
+    response.raise_for_status()
+
+    # The response structure is:
+    #     ["MRData"]["StandingsTable"]["StandingsLists"][0]["ConstructorStandings"]
+    # Each entry has keys: "position", "points", "Constructor" (dict with "name")
+    standings = response.json()["MRData"]["StandingsTable"]["StandingsLists"][0]["ConstructorStandings"]
+    result_lines = []
+    for entry in standings:
+        position    = entry["position"]
+        constructor = entry["Constructor"]["name"]
+        points      = entry["points"]
+        result_lines.append(f"P{position}  {constructor}  {points} pts")
+    
+    return "\n".join(result_lines)
+
+
+@mcp.resource("f1://drivers/current")
+def get_current_drivers() -> str:
+    """
+    Returns the list of current F1 drivers, including their names and nationalities.
+    """
+    url = f"{BASE_URL}/current/drivers.json"
+    response = http_client.get(url)
+    response.raise_for_status()
+
+    drivers = response.json()["MRData"]["DriverTable"]["Drivers"]
+    result_lines = []
+    for driver in drivers:
+        driver_code = driver["code"]
+        name = f"{driver['givenName']} {driver['familyName']}"
+        nationality = driver["nationality"]
+        permanent_number = driver.get("permanentNumber", "NA")
+        result_lines.append(f"{driver_code} : {name} ({nationality}) | #{permanent_number}")
+
+    return json.dumps(result_lines, indent=2)
+
+
+@mcp.prompt()
+def analyze_driver(driver_name: str) -> str:
+    """
+    Analyzes the career of a specific F1 driver, including their championship wins,
+    race victories, podium finishes, and other notable achievements.
+
+    Args:
+        driver_name: The full name of the driver, e.g. "Leclerc".
+    """
+    return (
+        f"Analyse the F1 career of {driver_name}. Cover: championship wins, race victories, "
+        f"notable seasons, and current season performance. Structure the response with clear sections."
+    )
 
 
 if __name__ == "__main__":
