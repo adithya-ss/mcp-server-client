@@ -128,21 +128,21 @@
 ### Day 5 — Adding Resources and Prompts to the F1 Server
 
 **Concept (~20 min):**
-- [ ] MCP servers expose 3 primitives:
+- [x] MCP servers expose 3 primitives:
   - **Tools** — functions the LLM calls
   - **Resources** — data the client can read (like files, DB rows)
   - **Prompts** — reusable prompt templates
-- [ ] Understand the difference between all three
+- [x] Understand the difference between all three
 
 **Hands-on (~40 min):**
-- [ ] Extend `server/f1_server.py` (no new file needed):
+- [x] Extend `server/f1_server.py` (no new file needed):
   - Add a 4th tool: `get_constructor_standings(season: int)` → WCC standings
   - Add a **resource** `f1://drivers/current` that returns the current season's driver list as JSON
   - Add a **prompt template** `analyze-driver` that takes a `driver_name` argument and returns a structured analysis prompt
-- [ ] Test with Inspector: `uv run mcp dev server/f1_server.py`
-- [ ] In Inspector, read the `f1://drivers/current` resource and verify
-- [ ] In Inspector, render the `analyze-driver` prompt with `driver_name=Leclerc`
-- [ ] Commit
+- [x] Test with Inspector: `uv run mcp dev server/f1_server.py`
+- [x] In Inspector, read the `f1://drivers/current` resource and verify
+- [x] In Inspector, render the `analyze-driver` prompt with `driver_name=Leclerc`
+- [x] Commit
 
 ---
 
