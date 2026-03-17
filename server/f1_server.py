@@ -41,7 +41,7 @@ def get_driver_standings(season: int) -> str:
         constructor = entry.get("Constructors", [{}])[0].get("name", "Unregistered")
         result_lines.append(f"P{position}  {driver}  {points} pts  ({constructor})")
 
-    return "\n".join(result_lines)
+    return json.dumps(result_lines, indent=2)
 
 @mcp.tool()
 def get_race_schedule(season: int) -> str:
@@ -71,7 +71,7 @@ def get_race_schedule(season: int) -> str:
         date         = race.get("date", "NA")
         result_lines.append(f"R{round_num} : {race_name}  —  {circuit_name}  ({date})")
 
-    return "\n".join(result_lines)
+    return json.dumps(result_lines, indent=2)
 
 @mcp.tool()
 def get_race_result(season: int, round: int) -> str:
@@ -108,7 +108,7 @@ def get_race_result(season: int, round: int) -> str:
         time_or_status = entry.get("Time", {}).get("time", "NA") or entry.get("status", "NA")
         result_lines.append(f"P{position}  {driver}  {constructor}  {time_or_status}")
 
-    return "\n".join(result_lines)
+    return json.dumps(result_lines, indent=2)
 
 @mcp.tool()
 def get_constructor_standings(season: int) -> str:
@@ -138,7 +138,7 @@ def get_constructor_standings(season: int) -> str:
         points      = entry.get("points", "0")
         result_lines.append(f"P{position}  {constructor}  {points} pts")
     
-    return "\n".join(result_lines)
+    return json.dumps(result_lines, indent=2)
 
 
 @mcp.resource("f1://drivers/current")
