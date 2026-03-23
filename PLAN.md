@@ -149,18 +149,18 @@
 ### Day 6 — First MCP Client: Querying the F1 Server
 
 **Concept (~20 min):**
-- [ ] Client's job: connect to server, discover tools/resources, wire into LLM
-- [ ] Understand `ClientSession` and `StdioServerParameters`
+- [x] Client's job: connect to server, discover tools/resources, wire into LLM
+- [x] Understand `ClientSession` and `StdioServerParameters`
 
 **Hands-on (~40 min):**
-- [ ] Create `client/basic_client.py`
-- [ ] Connect to `f1_server.py` using `StdioServerParameters`
-- [ ] Call `list_tools()` and print all available F1 tools
-- [ ] Call `get_driver_standings(2024)` programmatically and print the top 5 drivers
-- [ ] Call `get_race_result(2024, 1)` and print the Bahrain GP result
-- [ ] Read the `f1://drivers/current` resource and print the driver list
-- [ ] Run with: `uv run python client/basic_client.py`
-- [ ] Commit
+- [x] Create `client/basic_client.py`
+- [x] Connect to `f1_server.py` using `StdioServerParameters`
+- [x] Call `list_tools()` and print all available F1 tools
+- [x] Call `get_driver_standings(2024)` programmatically and print the top 5 drivers
+- [x] Call `get_race_result(2024, 1)` and print the Bahrain GP result
+- [x] Read the `f1://drivers/current` resource and print the driver list
+- [x] Run with: `uv run python client/basic_client.py`
+- [x] Commit
 
 ---
 
