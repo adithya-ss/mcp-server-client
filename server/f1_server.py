@@ -1,4 +1,5 @@
 import httpx
+import json
 from mcp.server.fastmcp import FastMCP
 
 
@@ -28,17 +29,19 @@ def get_driver_standings(season: int) -> str:
     # The response structure is:
     #     ["MRData"]["StandingsTable"]["StandingsLists"][0]["DriverStandings"]
     # Each entry has keys: "position", "points", "Driver" (a dict with "familyName"), "Constructors"
-    standings_list = response.json()["MRData"]["StandingsTable"]["StandingsLists"][0]["DriverStandings"]
+    data = response.json()
+    standings_lists = data.get("MRData", {}).get("StandingsTable", {}).get("StandingsLists", [])
+    standings_list = standings_lists[0].get("DriverStandings", []) if standings_lists else []
 
     result_lines = []
     for entry in standings_list:
-        position   = entry["position"]
-        driver     = entry["Driver"]["familyName"]
-        points     = entry["points"]
-        constructor = entry["Constructors"][0]["name"]
+        position    = entry.get("position", "NA")
+        driver      = entry.get("Driver", {}).get("familyName", "")
+        points      = entry.get("points", "0")
+        constructor = entry.get("Constructors", [{}])[0].get("name", "Unregistered")
         result_lines.append(f"P{position}  {driver}  {points} pts  ({constructor})")
 
-    return "\n".join(result_lines)
+    return json.dumps(result_lines, indent=2)
 
 @mcp.tool()
 def get_race_schedule(season: int) -> str:
@@ -57,17 +60,18 @@ def get_race_schedule(season: int) -> str:
     # The response structure is:
     #     ["MRData"]["RaceTable"]["Races"]
     # Each race entry has: "round", "raceName", "Circuit" (dict with "circuitName"), "date", "time"
-    races = response.json()["MRData"]["RaceTable"]["Races"]
+    data = response.json()
+    races = data.get("MRData", {}).get("RaceTable", {}).get("Races", [])
 
     result_lines = []
     for race in races:
-        round_num    = race["round"]
-        race_name    = race["raceName"]
-        circuit_name = race["Circuit"]["circuitName"]
-        date         = race["date"]
-        result_lines.append(f"R{round_num:02d} : {race_name}  —  {circuit_name}  ({date})")
+        round_num    = race.get("round", "NA")
+        race_name    = race.get("raceName", "NA")
+        circuit_name = race.get("Circuit", {}).get("circuitName", "NA")
+        date         = race.get("date", "NA")
+        result_lines.append(f"R{round_num} : {race_name}  —  {circuit_name}  ({date})")
 
-    return "\n".join(result_lines)
+    return json.dumps(result_lines, indent=2)
 
 @mcp.tool()
 def get_race_result(season: int, round: int) -> str:
@@ -89,18 +93,92 @@ def get_race_result(season: int, round: int) -> str:
     # The race dict has: "raceName", "date"
     # The results list is at: race["Results"]
     # Each result entry has: "position", "Driver" (dict), "Constructor" (dict), "Time" (dict with "time"), "status"
-    race_data = response.json()["MRData"]["RaceTable"]["Races"][0]
-    results   = race_data["Results"]
+    data = response.json()
+    races = data.get("MRData", {}).get("RaceTable", {}).get("Races", [])
+    race_data = races[0] if races else {}
+    results   = race_data.get("Results", [])
 
-    result_lines = [f'{race_data["raceName"]} {race_data["date"]}', "-" * 40]
+    race_name = race_data.get("raceName", "NA")
+    race_date = race_data.get("date", "NA")
+    result_lines = [f"{race_name} {race_date}", "-" * 40]
     for entry in results:
-        position    = entry["position"]
-        driver      = entry["Driver"]["familyName"]
-        constructor = entry["Constructor"]["name"]
-        time_or_status = entry.get("Time", {}).get("time") or entry["status"]
+        position       = entry.get("position", "NA")
+        driver         = entry.get("Driver", {}).get("familyName", "")
+        constructor    = entry.get("Constructor", {}).get("name", "Unregistered")
+        time_or_status = entry.get("Time", {}).get("time", "NA") or entry.get("status", "NA")
         result_lines.append(f"P{position}  {driver}  {constructor}  {time_or_status}")
 
-    return "\n".join(result_lines)
+    return json.dumps(result_lines, indent=2)
+
+@mcp.tool()
+def get_constructor_standings(season: int) -> str:
+    """
+    Returns the constructor standings for a specific season, including
+    positions, constructor names, and points. Use this when asked about
+    the current or historical constructor standings.
+
+    Args:
+        season: Four-digit year, e.g. 2024.
+    """
+    url = f"{BASE_URL}/{season}/constructorStandings.json"
+    response = http_client.get(url)
+    response.raise_for_status()
+
+    # The response structure is:
+    #     ["MRData"]["StandingsTable"]["StandingsLists"][0]["ConstructorStandings"]
+    # Each entry has keys: "position", "points", "Constructor" (dict with "name")
+    data = response.json()
+    standings_lists = data.get("MRData", {}).get("StandingsTable", {}).get("StandingsLists", [])
+    standings = standings_lists[0].get("ConstructorStandings", []) if standings_lists else []
+
+    result_lines = []
+    for entry in standings:
+        position    = entry.get("position", "NA")
+        constructor = entry.get("Constructor", {}).get("name", "Unregistered")
+        points      = entry.get("points", "0")
+        result_lines.append(f"P{position}  {constructor}  {points} pts")
+    
+    return json.dumps(result_lines, indent=2)
+
+
+@mcp.resource("f1://drivers/current")
+def get_current_drivers() -> str:
+    """
+    Returns the list of current F1 drivers, including their names and nationalities.
+    """
+    url = f"{BASE_URL}/current/drivers.json"
+    response = http_client.get(url)
+    response.raise_for_status()
+
+    data = response.json()
+    drivers = data.get("MRData", {}).get("DriverTable", {}).get("Drivers", [])
+
+    result_lines = []
+    for driver in drivers:
+        driver_code      = driver.get("code", "NA")
+        given_name       = driver.get("givenName", "")
+        family_name      = driver.get("familyName", "")
+        name             = f"{given_name} {family_name}".strip()
+        nationality      = driver.get("nationality", "NA")
+        permanent_number = driver.get("permanentNumber", "--")
+        result_lines.append(f"{driver_code} : {name} ({nationality}) | #{permanent_number}")
+
+    return json.dumps(result_lines, indent=2)
+
+
+@mcp.prompt()
+def analyze_driver(driver_name: str) -> str:
+    """
+    Analyzes the career of a specific F1 driver, including their championship wins,
+    race victories, podium finishes, and other notable achievements.
+
+    Args:
+        driver_name: The full name of the driver, e.g. "Leclerc".
+    """
+    return (
+        f"Analyse the F1 career of {driver_name}. Cover: championship wins, race victories, "
+        f"notable seasons, and current season performance. Structure the response with clear sections."
+    )
 
 
 if __name__ == "__main__":
