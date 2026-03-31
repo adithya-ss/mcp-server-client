@@ -107,8 +107,13 @@ async def run_agent():
                         
                         print(f"  → Calling {tool_name} with args: {tool_args}")
 
-                        mcp_result = await session.call_tool(tool_name, tool_args)
-                        tool_result_text = mcp_result.content[0].text
+                        try:
+                            mcp_result = await session.call_tool(tool_name, tool_args)
+                            tool_result_text = mcp_result.content[0].text
+                        except Exception as e:
+                            # If the tool call fails, return the error to Ollama
+                            tool_result_text = f"Error calling {tool_name}: {str(e)}"
+                            print(f"Tool call failed: {e}")
 
                         messages.append({
                             "role": "tool",
