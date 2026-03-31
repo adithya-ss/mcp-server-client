@@ -167,24 +167,24 @@
 ### Day 7 — Wiring It All Together: F1 Chat Agent + LLM + Server
 
 **Concept (~20 min):**
-- [ ] The **agentic loop**:
+- [x] The **agentic loop**:
   1. User query → Client sends to LLM (with tool definitions)
   2. LLM returns tool call → Client executes via MCP
   3. Result → back to LLM → final answer to user
 
 **Hands-on (~40 min):**
-- [ ] Create `client/agent_client.py`
-- [ ] Build chat loop: user input → Ollama (with F1 tool definitions) → execute MCP tool calls → final natural language answer
-- [ ] Test query 1: *"Who won the 2024 Formula 1 championship?"* → should trigger `get_driver_standings(2024)`
-- [ ] Test query 2: *"What was the result of the Monaco GP in 2023?"* → should trigger `get_race_result(2023, 8)`
-- [ ] Test query 3: *"Which constructor won the most championships in the 2020s?"* → should trigger `get_constructor_standings`
-- [ ] Run with: `uv run python client/agent_client.py`
-- [ ] Commit
+- [x] Create `client/agent_client.py`
+- [x] Build chat loop: user input → Ollama (with F1 tool definitions) → execute MCP tool calls → final natural language answer
+- [x] Test query 1: *"Who won the 2024 Formula 1 championship?"* → should trigger `get_driver_standings(2024)`
+- [x] Test query 2: *"What was the result of the Monaco GP in 2023?"* → should trigger `get_race_result(2023, 8)`
+- [x] Test query 3: *"Which constructor won the most championships in the 2020s?"* → should trigger `get_constructor_standings`
+- [x] Run with: `uv run python client/agent_client.py`
+- [x] Commit
 
 **Week 1 Milestone Check:**
-- [ ] `uv run mcp dev server/f1_server.py` opens Inspector and shows all 4 tools + 1 resource + 1 prompt
-- [ ] Chat agent correctly answers *"Who led the 2024 WDC?"* by calling `get_driver_standings`
-- [ ] Be able to explain Host vs Client vs Server using the F1 hub as an example
+- [x] `uv run mcp dev server/f1_server.py` opens Inspector and shows all 4 tools + 1 resource + 1 prompt
+- [x] Chat agent correctly answers *"Who led the 2024 WDC?"* by calling `get_driver_standings`
+- [x] Be able to explain Host vs Client vs Server using the F1 hub as an example
 
 ---
 
