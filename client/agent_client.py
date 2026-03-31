@@ -1,5 +1,6 @@
 import asyncio
 from pathlib import Path
+from datetime import datetime
 import ollama
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
@@ -68,7 +69,19 @@ async def run_agent():
             ollama_tools = [convert_mcp_tool_to_ollama(tool) for tool in mcp_tools]
 
             # Chat loop
-            messages = []
+            current_date = datetime.now().strftime("%B %d, %Y")
+            messages = [
+                {
+                    "role": "system",
+                    "content": (
+                        f"You are an expert Formula 1 assistant with access to real-time F1 data. "
+                        f"Today's date is {current_date}. When users say 'this season', 'current season', "
+                        f"or 'latest', they mean the {datetime.now().year} F1 season. "
+                        f"Use the available tools to fetch accurate data and provide detailed answers."
+                    )
+                }
+            ]
+            
             print("F1 Chat Agent ready. Ask me anything about Formula 1!")
             print("(Type 'exit' to quit)\n")
 
