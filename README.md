@@ -24,5 +24,21 @@
 **HTTP/SSE Transport**
 <br>A networked MCP transport where the server runs as an HTTP server, allowing multiple clients to connect remotely.
 
+**uv**
+<br>A Python project manager that handles virtual environments, dependencies, and script execution. `uv run <command>` ensures the correct `.venv` is always used — no manual activation needed. Always run scripts with `uv run` from inside the project folder so `uv` can locate `pyproject.toml`.
+
+**Relative Paths with `pathlib`**
+<br>Using `Path(__file__).parent` to build file paths relative to the current script, rather than hardcoding absolute paths. Makes code portable across machines and independent of the working directory.
+
+**MCP Client Session**
+- **`ClientSession`**
+<br>The object that manages communication with an MCP server. Must be initialised with `await session.initialize()` before any calls are made. Handles tool discovery, tool execution, and resource reads over the stdio pipe.
+
+- **`StdioServerParameters`**
+<br>Configuration object that tells the client how to spawn the server process. Takes `command`, `args`, and `env`. Always use `command="uv"` with `args=["run", "python", "<server path>"]` to ensure the correct virtual environment is used.
+
+**asyncio.run()**
+<br>The entry point for running an async function from synchronous code. An `async def` function called without `asyncio.run()` creates a coroutine object but never executes it. Always use `asyncio.run(my_async_function())` in the `if __name__ == "__main__"` block.
+
 ---
 
